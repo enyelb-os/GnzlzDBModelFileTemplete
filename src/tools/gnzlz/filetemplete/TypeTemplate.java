@@ -1,4 +1,4 @@
-package file;
+package tools.gnzlz.filetemplete;
 
 public enum TypeTemplate {
     MODEL,

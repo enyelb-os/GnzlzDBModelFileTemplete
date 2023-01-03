@@ -1,6 +1,6 @@
-package db;
+package tools.gnzlz.filetemplete;
 
-import command.ListCommand;
+import tools.gnzlz.command.ListCommand;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.database.properties.PropertiesConnection;
 import tools.gnzlz.database.properties.PropertiesMigration;

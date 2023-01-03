@@ -1,8 +1,7 @@
-package db;
+package tools.gnzlz.filetemplete;
 
-import command.Command;
-import command.ListCommand;
-import file.ListTemplates;
+import tools.gnzlz.command.Command;
+import tools.gnzlz.command.ListCommand;
 import tools.gnzlz.database.autocode.model.ACDataBase;
 import tools.gnzlz.database.autocode.model.ACTable;
 import tools.gnzlz.database.model.DBConfiguration;
