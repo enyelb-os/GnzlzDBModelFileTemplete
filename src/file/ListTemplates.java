@@ -1,7 +1,6 @@
 package file;
 
-import db.Command;
-import db.ListCommand;
+import command.ListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.model.ACCatalog;
 import tools.gnzlz.database.autocode.model.ACDataBase;
@@ -59,9 +58,11 @@ public class ListTemplates {
         });
     }
 
-    public static void commands(ListCommand command){
+    public static void commands(ListCommand commands){
         templates.stream().forEach(template ->{
-            command.addCommandsTemplete(template.template);
+            commands.listCommands((command -> {
+                template.template.object("command." + command.name().toLowerCase(), command.value());
+            }));
         });
 
     }
@@ -99,8 +100,10 @@ public class ListTemplates {
         });
     }
 
-    private static void commands(Template template, ListCommand command){
-        command.addCommandsTemplete(template);
+    private static void commands(Template template, ListCommand commands){
+        commands.listCommands((command -> {
+            template.object("command." + command.name().toLowerCase(), command.value());
+        }));
     }
 
     private static void database(Template template, ACDataBase dataBase){
