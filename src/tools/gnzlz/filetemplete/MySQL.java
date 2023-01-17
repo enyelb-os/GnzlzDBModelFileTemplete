@@ -37,6 +37,6 @@ public class MySQL extends DBConfiguration {
 
     @Override
     protected void initModel(PropertiesModel model) {
-        model.modelPackage("db.mysql.modelo").refresh(false);
+        model.refresh(false);
     }
 }
