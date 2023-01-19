@@ -318,35 +318,33 @@ public class ListTemplates {
             return true;
         });
 
+        template.object("typeData", o -> {
+            if (o instanceof String) {
+                return ACFormat.typeData((String) o);
+            }
+            return "";
+        });
 
-        if(ListTemplates.isObjectsDBModel) {
-            template.object("typeData", o -> {
-                if (o instanceof String) {
-                    return ACFormat.typeData((String) o);
-                }
-                return "";
-            });
+        template.object("typeValue", o -> {
+            if (o instanceof String) {
+                return ACFormat.typeValue((String) o);
+            }
+            return "";
+        });
 
-            template.object("typeValue", o -> {
-                if (o instanceof String) {
-                    return ACFormat.typeValue((String) o);
-                }
-                return "";
-            });
+        template.object("isDate", o -> {
+            if (o instanceof String) {
+                return ACFormat.dateFormat((String) o);
+            }
+            return false;
+        });
 
-            template.object("isDate", o -> {
-                if (o instanceof String) {
-                    return ACFormat.dateFormat((String) o);
-                }
-                return false;
-            });
 
-            template.object("path", o -> {
-                if (o instanceof String) {
-                    return ((String) o).replaceAll("[.]", "/");
-                }
-                return o;
-            });
-        }
+        template.object("path", o -> {
+            if (o instanceof String) {
+                return ((String) o).replaceAll("[.]", "/");
+            }
+            return o;
+        });
     }
 }
