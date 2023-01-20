@@ -13,6 +13,9 @@ public class Console {
      *********************************/
 
     static {
+        defaultCommands();
+    }
+    public static void defaultCommands() {
         Command.command("host"      , "localhost" , "", "--host"      , "-h");
         Command.command("port"      , -1          , "", "--port");
         Command.command("user"      , "root"      , "", "--user"      , "-u");
