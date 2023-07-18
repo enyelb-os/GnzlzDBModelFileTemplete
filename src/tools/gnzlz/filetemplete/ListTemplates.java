@@ -1,6 +1,7 @@
 package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.command.ListCommand;
+import tools.gnzlz.command.ResultListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.model.ACCatalog;
 import tools.gnzlz.database.autocode.model.ACDataBase;
@@ -138,7 +139,7 @@ public class ListTemplates {
      * commands
      *********************************/
 
-    public static void commands(ListCommand commands){
+    public static void commands(ResultListCommand commands){
         templates.stream().forEach(template ->{
             commands.listCommands((command -> {
                 template.template.object("command." + command.name().toLowerCase(), command.value());
@@ -196,7 +197,7 @@ public class ListTemplates {
     private static void database(Template template, ACDataBase dataBase){
         PTConnection connection = dataBase.configuration.connection().properties();
         template
-            .object("database.name", connection.database())
+            .object("database.name", connection.name())
             .object("database.user", connection.user())
             .object("database.password", connection.password())
             .object("database.host", connection.host())

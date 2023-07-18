@@ -1,6 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.ListCommand;
+import tools.gnzlz.command.ResultListCommand;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.database.properties.PropertiesConnection;
 import tools.gnzlz.database.properties.PropertiesMigration;
@@ -14,7 +14,7 @@ public class MySQL extends DBConfiguration {
     public static String password = "";
     public static String name = "";
 
-    public static void initConfig(ListCommand command){
+    public static void initConfig(ResultListCommand command){
         if(!command.string("host").isEmpty()) host = command.string("host");
         if(command.integer("port") != -1) port = command.integer("port");
         if(!command.string("user").isEmpty()) user = command.string("user");
