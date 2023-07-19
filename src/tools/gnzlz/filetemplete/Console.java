@@ -18,7 +18,7 @@ public class Console {
         defaultCommands();
     }
     public static void defaultCommands() {
-        listCommandDB.command("type").value(Value.option("mysql", "postgresql", "sqlite")).commands("--type", "-t");
+        listCommandDB.command("type").value(Option.option("mysql", "postgresql", "sqlite")).commands("--type", "-t");
         listCommandDB.command("path").value("").commands("--path", "-pt");
         listCommandDB.command("host").value("localhost").commands("--host", "-h");
         listCommandDB.command("port").value(-1).commands("--port");
@@ -34,7 +34,7 @@ public class Console {
 
     public static <T extends DBConfiguration> Class<? extends DBConfiguration> dbconfiguration(ResultListCommand command){
         Class<? extends DBConfiguration> c = null;
-        if(command.value("type").is("sqlite")){
+        if(command.string("type").equalsIgnoreCase("sqlite")){
             SQLite.initConfig(command);
             c = SQLite.class;
         } else {
@@ -48,6 +48,9 @@ public class Console {
      * process
      *********************************/
 
+    public static <T extends DBConfiguration> void process(ResultListCommand resultListCommand, String ... fileNames){
+        Console.generate(dbconfiguration(resultListCommand), resultListCommand, fileNames);
+    }
     public static <T extends DBConfiguration> void process(String[] args, ListCommand commands, String ... fileNames){
         ResultListCommand command = Process.process(args, commands);
         Console.generate(dbconfiguration(command), command, fileNames);
@@ -75,9 +78,8 @@ public class Console {
      * processCatalog
      *********************************/
 
-    public static <T extends DBConfiguration> void processCatalog(String[] args, ListCommand listCommand, String name, String ... fileNames) {
-        ResultListCommand command = Process.process(args, listCommand);
-        Console.generateModel(dbconfiguration(command), command, name, fileNames);
+    public static <T extends DBConfiguration> void processCatalog(ResultListCommand resultListCommand, String name, String ... fileNames) {
+        Console.generateModel(dbconfiguration(resultListCommand), resultListCommand, name, fileNames);
     }
 
     /*********************************
@@ -99,9 +101,8 @@ public class Console {
      * processScheme
      *********************************/
 
-    public static <T extends DBConfiguration> void processScheme(String[] args, ListCommand commands, String name, String ... fileNames) {
-        ResultListCommand command = Process.process(args, commands);
-        Console.generateModel(dbconfiguration(command), command, name, fileNames);
+    public static <T extends DBConfiguration> void processScheme(ResultListCommand resultListCommand, String name, String ... fileNames) {
+        Console.generateModel(dbconfiguration(resultListCommand), resultListCommand, name, fileNames);
     }
 
     /*********************************
@@ -125,9 +126,8 @@ public class Console {
      * processModel
      *********************************/
 
-    public static <T extends DBConfiguration> void processModel(String[] args, ListCommand listCommand, String name, String ... fileNames) {
-        ResultListCommand command = Process.process(args, listCommand);
-        Console.generateModel(dbconfiguration(command), command, name, fileNames);
+    public static <T extends DBConfiguration> void processModel(ResultListCommand resultListCommand, String name, String ... fileNames) {
+        Console.generateModel(dbconfiguration(resultListCommand), resultListCommand, name, fileNames);
     }
 
 

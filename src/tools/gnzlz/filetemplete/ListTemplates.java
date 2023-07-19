@@ -1,6 +1,5 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.ListCommand;
 import tools.gnzlz.command.ResultListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.model.ACCatalog;
@@ -184,7 +183,7 @@ public class ListTemplates {
      * commands
      *********************************/
 
-    private static void commands(Template template, ListCommand commands){
+    private static void commands(Template template, ResultListCommand commands){
         commands.listCommands((command -> {
             template.object("command." + command.name().toLowerCase(), command.value());
         }));
