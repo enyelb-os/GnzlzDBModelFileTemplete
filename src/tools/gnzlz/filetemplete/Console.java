@@ -2,6 +2,11 @@ package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.command.*;
 import tools.gnzlz.command.Process;
+import tools.gnzlz.command.ResultListCommand;
+import tools.gnzlz.command.type.CommandBoolean;
+import tools.gnzlz.command.type.CommandInteger;
+import tools.gnzlz.command.type.CommandOption;
+import tools.gnzlz.command.type.CommandString;
 import tools.gnzlz.database.autocode.model.ACDataBase;
 import tools.gnzlz.database.autocode.model.ACTable;
 import tools.gnzlz.database.model.DBConfiguration;
@@ -18,14 +23,14 @@ public class Console {
         defaultCommands();
     }
     public static void defaultCommands() {
-        listCommandDB.command("type").value(Option.option("mysql", "postgresql", "sqlite")).commands("--type", "-t");
-        listCommandDB.command("path").value("").commands("--path", "-pt");
-        listCommandDB.command("host").value("localhost").commands("--host", "-h");
-        listCommandDB.command("port").value(-1).commands("--port");
-        listCommandDB.command("user").value("root").commands("--user", "-u");
-        listCommandDB.command("password").value("").commands("--pass", "-p");
-        listCommandDB.command("name").value("").commands("--name", "-n");
-        listCommandDB.command("modules").value(false).commands("--modules", "-m");
+        listCommandDB.addCommand(CommandOption.create("type").option("mysql", "postgresql", "sqlite").commands("--type", "-t"));
+        listCommandDB.addCommand(CommandString.create("path").value("").commands("--path", "-pt"));
+        listCommandDB.addCommand(CommandString.create("host").value("localhost").commands("--host", "-h"));
+        listCommandDB.addCommand(CommandInteger.create("port").value(-1).commands("--port"));
+        listCommandDB.addCommand(CommandString.create("user").value("root").commands("--user", "-u"));
+        listCommandDB.addCommand(CommandString.create("password").value("").commands("--pass", "-p"));
+        listCommandDB.addCommand(CommandString.create("name").value("").commands("--name", "-n"));
+        listCommandDB.addCommand(CommandBoolean.create("modules").value(false).commands("--modules", "-m"));
     }
 
     /*********************************
@@ -52,7 +57,7 @@ public class Console {
         Console.generate(dbconfiguration(resultListCommand), resultListCommand, fileNames);
     }
     public static <T extends DBConfiguration> void process(String[] args, ListCommand commands, String ... fileNames){
-        ResultListCommand command = Process.process(args, commands);
+        ResultListCommand command = Process.argsAndQuestions(args, commands);
         Console.generate(dbconfiguration(command), command, fileNames);
     }
 
