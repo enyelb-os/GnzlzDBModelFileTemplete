@@ -1,6 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.result.object.ResultListCommand;
+import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.model.ACCatalog;
 import tools.gnzlz.database.autocode.model.ACDataBase;

@@ -3,7 +3,7 @@ package tools.gnzlz.filetemplete;
 import tools.gnzlz.command.Process;
 import tools.gnzlz.command.command.object.ListCommand;
 import tools.gnzlz.command.command.type.*;
-import tools.gnzlz.command.result.object.ResultListCommand;
+import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.model.ACDataBase;
 import tools.gnzlz.database.autocode.model.ACTable;
 import tools.gnzlz.database.model.DBConfiguration;
