@@ -1,6 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.Process;
+import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.command.object.ListCommand;
 import tools.gnzlz.command.command.type.*;
 import tools.gnzlz.command.result.ResultListCommand;
