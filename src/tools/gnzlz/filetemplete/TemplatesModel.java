@@ -2,9 +2,9 @@ package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.database.autocode.model.ACTable;
 import tools.gnzlz.template.template.Template;
-import tools.gnzlz.template.template.type.TemplatesBase;
+import tools.gnzlz.template.template.TemplateLoader;
 
-public class TemplatesModel extends TemplatesBase<TemplatesModel> {
+public class TemplatesModel extends TemplateLoader<TemplatesModel> {
 
     /**
      * TemplatesModel
@@ -70,7 +70,7 @@ public class TemplatesModel extends TemplatesBase<TemplatesModel> {
      * setObjects
      * @param templatesBase t
      */
-    protected static void setObjects(TemplatesBase<?> templatesBase) {
+    protected static void setObjects(TemplateLoader<?> templatesBase) {
         templatesBase.objects(ACTable.class, (template, table) -> {
             template
                 .object("table", table)

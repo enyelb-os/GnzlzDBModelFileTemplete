@@ -2,9 +2,9 @@ package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.database.autocode.model.ACScheme;
 import tools.gnzlz.template.template.Template;
-import tools.gnzlz.template.template.type.TemplatesBase;
+import tools.gnzlz.template.template.TemplateLoader;
 
-public class TemplatesScheme extends TemplatesBase<TemplatesScheme> {
+public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
 
     /**
      * TemplatesScheme
@@ -69,7 +69,7 @@ public class TemplatesScheme extends TemplatesBase<TemplatesScheme> {
      * setObjects
      * @param templatesBase t
      */
-    protected static void setObjects(TemplatesBase<?> templatesBase) {
+    protected static void setObjects(TemplateLoader<?> templatesBase) {
         templatesBase.objects(ACScheme.class, (template, scheme) -> {
             template
                 .object("scheme", scheme)

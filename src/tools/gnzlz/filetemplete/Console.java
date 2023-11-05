@@ -2,15 +2,14 @@ package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.command.command.Command;
 import tools.gnzlz.command.command.functional.FunctionRequiredCommand;
-import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.command.object.ListCommand;
 import tools.gnzlz.command.command.type.*;
+import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.model.ACDataBase;
-import tools.gnzlz.database.autocode.model.ACTable;
 import tools.gnzlz.database.model.DBConfiguration;
-import tools.gnzlz.template.template.type.TemplatesBase;
-import tools.gnzlz.template.template.type.TemplatesManager;
+import tools.gnzlz.template.template.TemplateLoader;
+import tools.gnzlz.template.template.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -128,7 +127,7 @@ public class Console {
      * @param manager m
      * @param fileNames f
      */
-    public static void process(ResultListCommand resultListCommand, TemplatesManager manager, String... fileNames){
+    public static void process(ResultListCommand resultListCommand, TemplateManager manager, String... fileNames){
         Console.generate(dbConfiguration(resultListCommand), resultListCommand, manager.templates(), fileNames);
     }
 
@@ -138,7 +137,7 @@ public class Console {
      * @param manager m
      * @param fileNames f
      */
-    public static void process(String[] args, ListCommand commands, TemplatesManager manager, String... fileNames){
+    public static void process(String[] args, ListCommand commands, TemplateManager manager, String... fileNames){
         ResultListCommand command = Process.argsAndQuestions(args, commands);
         Console.generate(dbConfiguration(command), command, manager.templates(), fileNames);
     }
@@ -150,7 +149,7 @@ public class Console {
      * @param templates t
      * @param fileNames f
      */
-    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplatesBase> templates, String... fileNames) {
+    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader> templates, String... fileNames) {
 
         ACDataBase dataBase = ACDataBase.dataBase(c, command.string("name"));
 
@@ -187,7 +186,7 @@ public class Console {
      * @param predicate p
      * @param objects o
      */
-    private static void processTemplate(String names, boolean process, ArrayList<TemplatesBase> templates, Predicate<? super TemplatesBase> predicate, Object ... objects) {
+    private static void processTemplate(String names, boolean process, ArrayList<TemplateLoader> templates, Predicate<? super TemplateLoader> predicate, Object ... objects) {
         if (process) {
             templates.stream().filter(predicate).forEach(template -> {
                 template.process(names,objects);
@@ -200,7 +199,7 @@ public class Console {
      * @param templates t
      * @param objects o
      */
-    private static void processObjects(ArrayList<TemplatesBase> templates, Object ... objects) {
+    private static void processObjects(ArrayList<TemplateLoader> templates, Object ... objects) {
         templates.forEach(template -> {
             template.objects(objects);
         });

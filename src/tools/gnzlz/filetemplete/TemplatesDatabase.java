@@ -11,11 +11,11 @@ import tools.gnzlz.database.model.interfaces.Dialect;
 import tools.gnzlz.database.properties.*;
 import tools.gnzlz.database.query.model.Select;
 import tools.gnzlz.template.template.Template;
-import tools.gnzlz.template.template.type.TemplatesBase;
+import tools.gnzlz.template.template.TemplateLoader;
 
 import java.util.ArrayList;
 
-public class TemplatesDatabase extends TemplatesBase<TemplatesDatabase> {
+public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
 
     /**
      * isObjectsDBModel
@@ -174,7 +174,7 @@ public class TemplatesDatabase extends TemplatesBase<TemplatesDatabase> {
      * setObjects
      * @param templatesBase t
      */
-    protected static void setObjects(TemplatesBase<?> templatesBase) {
+    protected static void setObjects(TemplateLoader<?> templatesBase) {
         templatesBase.objects(ACDataBase.class, (template, dataBase) -> {
             PTConnection connection = dataBase.configuration.connection().properties();
             template
