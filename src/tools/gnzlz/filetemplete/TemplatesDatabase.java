@@ -10,8 +10,8 @@ import tools.gnzlz.database.model.DBTable;
 import tools.gnzlz.database.model.interfaces.Dialect;
 import tools.gnzlz.database.properties.*;
 import tools.gnzlz.database.query.model.Select;
-import tools.gnzlz.template.template.Template;
-import tools.gnzlz.template.template.TemplateLoader;
+import tools.gnzlz.template.Template;
+import tools.gnzlz.template.TemplateLoader;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.command.Command;
 import tools.gnzlz.command.command.functional.FunctionRequiredCommand;
 import tools.gnzlz.command.command.object.ListCommand;
 import tools.gnzlz.command.command.type.*;
@@ -8,8 +7,8 @@ import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.model.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
-import tools.gnzlz.template.template.TemplateLoader;
-import tools.gnzlz.template.template.TemplateManager;
+import tools.gnzlz.template.TemplateLoader;
+import tools.gnzlz.template.TemplateManager;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -25,7 +24,6 @@ public class Console {
      * REQUIRED_DB_FILE
      */
     private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (commands) -> {
-        System.out.println(commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql"));
         return commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
     };
 
@@ -42,7 +40,7 @@ public class Console {
     /**
      * HOST
      */
-    public final static Command HOST = CommandString
+    public final static CommandString HOST = CommandString
             .create("host")
             .commands("--host", "-h")
             .message("host")
@@ -52,7 +50,7 @@ public class Console {
     /**
      * PORT
      */
-    public final static Command PORT = CommandInteger
+    public final static CommandInteger PORT = CommandInteger
             .create("port")
             .commands("--port")
             .message("port")
@@ -62,7 +60,7 @@ public class Console {
     /**
      * USER
      */
-    public final static Command USER = CommandString
+    public final static CommandString USER = CommandString
             .create("user")
             .message("user")
             .required(REQUIRED_DB_SERVER)
@@ -72,7 +70,7 @@ public class Console {
     /**
      * PASSWORD
      */
-    public final static Command PASSWORD = CommandString
+    public final static CommandString PASSWORD = CommandString
             .create("password")
             .commands("--pass", "-p")
             .message("password")
@@ -82,7 +80,7 @@ public class Console {
     /**
      * NAME
      */
-    public final static Command NAME = CommandString
+    public final static CommandString NAME = CommandString
             .create("name")
             .commands("--name", "-n")
             .message("name")
@@ -91,7 +89,7 @@ public class Console {
     /**
      * PATH
      */
-    public final static Command PATH = CommandString
+    public final static CommandString PATH = CommandString
             .create("path")
             .message("Path file db")
             .required(REQUIRED_DB_FILE)
@@ -149,7 +147,7 @@ public class Console {
      * @param templates t
      * @param fileNames f
      */
-    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader> templates, String... fileNames) {
+    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader<?>> templates, String... fileNames) {
 
         ACDataBase dataBase = ACDataBase.dataBase(c, command.string("name"));
 
@@ -186,7 +184,7 @@ public class Console {
      * @param predicate p
      * @param objects o
      */
-    private static void processTemplate(String names, boolean process, ArrayList<TemplateLoader> templates, Predicate<? super TemplateLoader> predicate, Object ... objects) {
+    private static void processTemplate(String names, boolean process, ArrayList<TemplateLoader<?>> templates, Predicate<? super TemplateLoader<?>> predicate, Object ... objects) {
         if (process) {
             templates.stream().filter(predicate).forEach(template -> {
                 template.process(names,objects);
@@ -199,7 +197,7 @@ public class Console {
      * @param templates t
      * @param objects o
      */
-    private static void processObjects(ArrayList<TemplateLoader> templates, Object ... objects) {
+    private static void processObjects(ArrayList<TemplateLoader<?>> templates, Object ... objects) {
         templates.forEach(template -> {
             template.objects(objects);
         });

@@ -1,8 +1,8 @@
 package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.database.autocode.model.ACScheme;
-import tools.gnzlz.template.template.Template;
-import tools.gnzlz.template.template.TemplateLoader;
+import tools.gnzlz.template.Template;
+import tools.gnzlz.template.TemplateLoader;
 
 public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
 
