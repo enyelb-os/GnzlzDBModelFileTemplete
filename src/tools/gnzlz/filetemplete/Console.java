@@ -169,8 +169,6 @@ public class Console {
                 Console.processTemplate(names, createScheme, templates, t -> t instanceof TemplatesScheme);
 
                 scheme.tables.forEach(table -> {
-
-                    Console.processObjects(templates, table);
                     Console.processTemplate(names, createModel, templates, t -> t instanceof TemplatesModel, table);
                 });
             });
