@@ -158,6 +158,8 @@ public class Console {
 
         Console.processObjects(templates, command, dataBase);
 
+
+
         dataBase.catalogs.forEach(catalog -> {
 
             Console.processObjects(templates, catalog);
