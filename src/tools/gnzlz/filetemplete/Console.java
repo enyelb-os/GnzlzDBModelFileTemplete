@@ -52,7 +52,7 @@ public class Console {
      */
     public final static CommandInteger PORT = CommandInteger
             .create("port")
-            .commands("--port")
+            .commands("--port", "-pr")
             .message("port")
             .required(REQUIRED_DB_SERVER)
             .value(-1);
