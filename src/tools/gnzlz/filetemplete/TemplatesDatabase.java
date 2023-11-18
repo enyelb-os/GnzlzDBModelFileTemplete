@@ -86,56 +86,56 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
      */
     protected static void setDefaultObjects(Template template){
         template.object("classname", o -> {
-            if(o instanceof Class) {
+            if (o instanceof Class) {
                 return ((Class<?>)o).getSimpleName();
-            }else if(o instanceof Object){
+            } else if(o != null) {
                 return o.getClass().getSimpleName();
             }
             return "";
         });
 
         template.object("package", o -> {
-            if(o instanceof Class) {
+            if (o instanceof Class) {
                 return ((Class<?>)o).getPackage().getName();
-            }else if(o instanceof Object){
+            } else if(o != null) {
                 return o.getClass().getPackage().getName();
             }
             return "";
         });
 
         template.object("camelcase", o -> {
-            if(o instanceof String || o instanceof Dialect) {
+            if (o instanceof String || o instanceof Dialect) {
                 return ACFormat.beginValidNumber(ACFormat.camelCaseClass(o.toString()));
             }
             return "";
         });
 
         template.object("lowercamelcase", o -> {
-            if(o instanceof String || o instanceof Dialect) {
+            if (o instanceof String || o instanceof Dialect) {
                 return ACFormat.beginValidNumber(ACFormat.camelCaseMethod(o.toString()));
             }
             return "";
         });
 
         template.object("uppercase", o -> {
-            if(o instanceof String || o instanceof Dialect) {
+            if (o instanceof String || o instanceof Dialect) {
                 return ACFormat.beginValidNumber(o.toString()).toUpperCase();
             }
             return "";
         });
 
         template.object("lowercase", o -> {
-            if(o instanceof String || o instanceof Dialect) {
+            if (o instanceof String || o instanceof Dialect) {
                 return ACFormat.beginValidNumber(o.toString()).toLowerCase();
             }
             return "";
         });
 
         template.object("empty", o -> {
-            if(o instanceof String) {
+            if (o instanceof String) {
                 return ((String) o).isEmpty();
-            } else if(o instanceof ArrayList){
-                return ((ArrayList) o).isEmpty();
+            } else if(o instanceof ArrayList) {
+                return ((ArrayList<?>) o).isEmpty();
             }
             return true;
         });
