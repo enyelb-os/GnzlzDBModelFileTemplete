@@ -1,6 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.database.autocode.model.ACScheme;
+import tools.gnzlz.database.autocode.ACScheme;
 import tools.gnzlz.template.Template;
 import tools.gnzlz.template.TemplateLoader;
 

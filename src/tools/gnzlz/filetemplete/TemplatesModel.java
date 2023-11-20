@@ -1,6 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.database.autocode.model.ACTable;
+import tools.gnzlz.database.autocode.ACTable;
 import tools.gnzlz.template.Template;
 import tools.gnzlz.template.TemplateLoader;
 
@@ -78,7 +78,7 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
 
             if(TemplatesDatabase.isObjectsDBModel){
                 template
-                    .object("table.package", table.packegeName)
+                    //.object("table.package", table.packegeName)
                     .object("table.extra.imports", table.extraImports());
             }
         });

@@ -2,8 +2,8 @@ package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
-import tools.gnzlz.database.autocode.model.ACCatalog;
-import tools.gnzlz.database.autocode.model.ACDataBase;
+import tools.gnzlz.database.autocode.ACCatalog;
+import tools.gnzlz.database.autocode.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.database.model.DBModel;
 import tools.gnzlz.database.model.DBTable;
@@ -86,8 +86,8 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
      */
     protected static void setDefaultObjects(Template template){
         template.object("classname", o -> {
-            if (o instanceof Class) {
-                return ((Class<?>)o).getSimpleName();
+            if (o instanceof Class c) {
+                return c.getSimpleName();
             } else if(o != null) {
                 return o.getClass().getSimpleName();
             }
@@ -95,8 +95,8 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
         });
 
         template.object("package", o -> {
-            if (o instanceof Class) {
-                return ((Class<?>)o).getPackage().getName();
+            if (o instanceof Class c) {
+                return c.getPackage().getName();
             } else if(o != null) {
                 return o.getClass().getPackage().getName();
             }
@@ -132,8 +132,8 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
         });
 
         template.object("empty", o -> {
-            if (o instanceof String) {
-                return ((String) o).isEmpty();
+            if (o instanceof String s) {
+                return s.isEmpty();
             } else if(o instanceof ArrayList) {
                 return ((ArrayList<?>) o).isEmpty();
             }
