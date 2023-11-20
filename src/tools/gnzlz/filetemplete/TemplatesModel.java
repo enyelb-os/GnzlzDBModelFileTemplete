@@ -74,7 +74,7 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
         templatesBase.objects(ACTable.class, (template, table) -> {
             template
                 .object("table", table)
-                .object("table.imports", table.hasOneImports());
+                .object("table.imports", table.oneToOne());
 
             if(TemplatesDatabase.isObjectsDBModel){
                 template
