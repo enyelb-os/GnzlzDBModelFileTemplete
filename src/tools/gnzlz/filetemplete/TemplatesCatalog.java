@@ -4,36 +4,27 @@ import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.ACCatalog;
 import tools.gnzlz.database.autocode.ACDataBase;
-import tools.gnzlz.database.model.DBConfiguration;
-import tools.gnzlz.database.model.DBModel;
-import tools.gnzlz.database.model.DBTable;
 import tools.gnzlz.database.model.interfaces.Dialect;
-import tools.gnzlz.database.properties.*;
-import tools.gnzlz.database.query.model.Select;
+import tools.gnzlz.database.properties.PTConnection;
 import tools.gnzlz.template.Template;
 import tools.gnzlz.template.TemplateLoader;
 
 import java.util.ArrayList;
 
-public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
+public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
 
     /**
-     * isObjectsDBModel
+     * TemplatesCatalog
      */
-    public static boolean isObjectsDBModel = false;
-
-    /**
-     * TemplatesDatabase
-     */
-    protected TemplatesDatabase(){
+    protected TemplatesCatalog(){
         this("","");
     }
 
     /**
-     * TemplatesDatabase
+     * TemplatesCatalog
      * @param path p
      */
-    protected TemplatesDatabase(String path){
+    protected TemplatesCatalog(String path){
         this(path, "");
     }
 
@@ -42,24 +33,24 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
      * @param path p
      * @param out o
      */
-    protected TemplatesDatabase(String path, String out){
+    protected TemplatesCatalog(String path, String out){
         super(path, out);
-        TemplatesDatabase.setObjects(this);
+        TemplatesCatalog.setObjects(this);
     }
 
     /**
      * create
      */
-    public static TemplatesDatabase create(){
-        return new TemplatesDatabase();
+    public static TemplatesCatalog create(){
+        return new TemplatesCatalog();
     }
 
     /**
      * create
      * @param path p
      */
-    public static TemplatesDatabase create(String path){
-        return new TemplatesDatabase(path);
+    public static TemplatesCatalog create(String path){
+        return new TemplatesCatalog(path);
     }
 
     /**
@@ -67,8 +58,8 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
      * @param path p
      * @param out o
      */
-    public static TemplatesDatabase create(String path, String out){
-        return new TemplatesDatabase(path, out);
+    public static TemplatesCatalog create(String path, String out){
+        return new TemplatesCatalog(path, out);
     }
 
     /**
@@ -77,7 +68,7 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
      */
     @Override
     protected void defaultObjects(Template template){
-        TemplatesDatabase.setDefaultObjects(template);
+        TemplatesCatalog.setDefaultObjects(template);
     }
 
     /**
@@ -156,7 +147,7 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
 
         template.object("isDate", o -> {
             if (o instanceof String) {
-                return ACFormat.dateFormat((String) o);
+                return ACFormat.isDateFormat((String) o);
             }
             return false;
         });
@@ -187,21 +178,6 @@ public class TemplatesDatabase extends TemplateLoader<TemplatesDatabase> {
                 .object("dialect.mysql", Dialect.MySQL)
                 .object("dialect.sqlite", Dialect.SQLite)
                 .object("dialect.postgresql", Dialect.PostgreSQL);
-
-            if(TemplatesDatabase.isObjectsDBModel){
-                template
-                    .object("DBModel", DBModel.class)
-                    .object("DataBase", dataBase)
-                    .object("DBTable", DBTable.class)
-                    .object("DBTable", DBTable.class)
-                    .object("Select", Select.class)
-                    .object("DBConfiguration", DBConfiguration.class)
-                    .object("PropertiesConnection", PropertiesConnection.class)
-                    .object("PropertiesTable", PropertiesTable.class)
-                    .object("PropertiesModel", PropertiesModel.class)
-                    .object("PropertiesMigration", PropertiesMigration.class)
-                    .object("ArrayList", ArrayList.class);
-            }
         });
 
         templatesBase.objects(ResultListCommand.class, (template, commands) -> {

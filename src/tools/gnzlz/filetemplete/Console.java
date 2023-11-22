@@ -158,12 +158,10 @@ public class Console {
 
         Console.processObjects(templates, command, dataBase);
 
-
-
         dataBase.catalogs.forEach(catalog -> {
 
             Console.processObjects(templates, catalog);
-            Console.processTemplate(names, createCatalog, templates, t -> t instanceof TemplatesDatabase);
+            Console.processTemplate(names, createCatalog, templates, t -> t instanceof TemplatesCatalog);
 
             catalog.schemes.forEach(scheme -> {
 

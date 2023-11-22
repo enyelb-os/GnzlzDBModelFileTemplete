@@ -28,7 +28,7 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      */
     protected TemplatesScheme(String path, String out){
         super(path, out);
-        TemplatesDatabase.setObjects(this);
+        TemplatesCatalog.setObjects(this);
         TemplatesScheme.setObjects(this);
     }
 
@@ -62,7 +62,7 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      */
     @Override
     protected void defaultObjects(Template template){
-        TemplatesDatabase.setDefaultObjects(template);
+        TemplatesCatalog.setDefaultObjects(template);
     }
 
     /**
