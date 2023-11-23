@@ -174,6 +174,7 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
                 .object("database.password", connection.password())
                 .object("database.host", connection.host())
                 .object("database.port", connection.port())
+                .object("database.path", connection.path())
                 .object("database.dialect", connection.dialect())
                 .object("dialect.mysql", Dialect.MySQL)
                 .object("dialect.sqlite", Dialect.SQLite)

@@ -9,11 +9,15 @@ import tools.gnzlz.database.properties.PropertiesModel;
 public class SQLite extends DBConfiguration {
 
     public static String path = System.getProperty("user.dir").concat("/");
-    public static String name = "database.db";
+    public static String name = "database";
 
     public static void initConfig(ResultListCommand command){
-        if(!command.string("path").isEmpty()) path = command.string("path").replaceAll("%20"," ");
-        if(!command.string("name").isEmpty()) name = command.string("name");
+        if (!command.string("path").isEmpty()) {
+            path = command.string("path").replaceAll("%20"," ");
+        }
+        if (!command.string("name").isEmpty()) {
+            name = command.string("name");
+        }
     }
 
     @Override
