@@ -62,6 +62,7 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      */
     @Override
     protected void defaultObjects(Template template){
+        super.defaultObjects(template);
         TemplatesCatalog.setDefaultObjects(template);
     }
 

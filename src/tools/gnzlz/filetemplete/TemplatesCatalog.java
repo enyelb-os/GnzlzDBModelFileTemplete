@@ -9,8 +9,6 @@ import tools.gnzlz.database.properties.PTConnection;
 import tools.gnzlz.template.Template;
 import tools.gnzlz.template.TemplateLoader;
 
-import java.util.ArrayList;
-
 public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
 
     /**
@@ -29,7 +27,7 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
     }
 
     /**
-     * TemplatesDatabase
+     * TemplatesCatalog
      * @param path p
      * @param out o
      */
@@ -68,6 +66,7 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
      */
     @Override
     protected void defaultObjects(Template template){
+        super.defaultObjects(template);
         TemplatesCatalog.setDefaultObjects(template);
     }
 
@@ -76,88 +75,26 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
      * @param template t
      */
     protected static void setDefaultObjects(Template template){
-        template.object("classname", o -> {
-            if (o instanceof Class c) {
-                return c.getSimpleName();
-            } else if(o != null) {
-                return o.getClass().getSimpleName();
-            }
-            return "";
-        });
-
-        template.object("package", o -> {
-            if (o instanceof Class c) {
-                return c.getPackage().getName();
-            } else if(o != null) {
-                return o.getClass().getPackage().getName();
-            }
-            return "";
-        });
-
-        template.object("camelcase", o -> {
-            if (o instanceof String || o instanceof Dialect) {
-                return ACFormat.beginValidNumber(ACFormat.camelCaseClass(o.toString()));
-            }
-            return "";
-        });
-
-        template.object("lowercamelcase", o -> {
-            if (o instanceof String || o instanceof Dialect) {
-                return ACFormat.beginValidNumber(ACFormat.camelCaseMethod(o.toString()));
-            }
-            return "";
-        });
-
-        template.object("uppercase", o -> {
-            if (o instanceof String || o instanceof Dialect) {
-                return ACFormat.beginValidNumber(o.toString()).toUpperCase();
-            }
-            return "";
-        });
-
-        template.object("lowercase", o -> {
-            if (o instanceof String || o instanceof Dialect) {
-                return ACFormat.beginValidNumber(o.toString()).toLowerCase();
-            }
-            return "";
-        });
-
-        template.object("empty", o -> {
-            if (o instanceof String s) {
-                return s.isEmpty();
-            } else if(o instanceof ArrayList) {
-                return ((ArrayList<?>) o).isEmpty();
-            }
-            return true;
-        });
 
         template.object("typeData", o -> {
-            if (o instanceof String) {
-                return ACFormat.typeData((String) o);
+            if (o instanceof String s) {
+                return ACFormat.typeData(s);
             }
             return "";
         });
 
         template.object("typeValue", o -> {
-            if (o instanceof String) {
-                return ACFormat.typeValue((String) o);
+            if (o instanceof String s) {
+                return ACFormat.typeValue(s);
             }
             return "";
         });
 
         template.object("isDate", o -> {
-            if (o instanceof String) {
-                return ACFormat.isDateFormat((String) o);
+            if (o instanceof String s) {
+                return ACFormat.isDateFormat(s);
             }
             return false;
-        });
-
-
-        template.object("path", o -> {
-            if (o instanceof String) {
-                return ((String) o).replaceAll("[.]", "/");
-            }
-            return o;
         });
     }
 

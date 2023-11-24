@@ -1,6 +1,5 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.database.autocode.ACColumn;
 import tools.gnzlz.database.autocode.ACFormat;
 import tools.gnzlz.database.autocode.ACTable;
 import tools.gnzlz.template.Template;
@@ -67,6 +66,7 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
      */
     @Override
     protected void defaultObjects(Template template){
+        super.defaultObjects(template);
         TemplatesCatalog.setDefaultObjects(template);
     }
 
