@@ -197,7 +197,7 @@ public class Console {
      */
     private static void processObjects(ArrayList<TemplateLoader<?>> templates, Object ... objects) {
         templates.forEach(template -> {
-            template.objects(objects);
+            template.addObjects(objects);
         });
     }
 }

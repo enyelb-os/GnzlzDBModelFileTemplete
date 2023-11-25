@@ -28,8 +28,7 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      */
     protected TemplatesScheme(String path, String out){
         super(path, out);
-        TemplatesCatalog.setObjects(this);
-        TemplatesScheme.setObjects(this);
+        TemplateObjects.setObjectsScheme(this);
     }
 
     /**
@@ -54,27 +53,5 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      */
     public static TemplatesScheme create(String path, String out){
         return new TemplatesScheme(path, out);
-    }
-
-    /**
-     * defaultObjects
-     * @param template t
-     */
-    @Override
-    protected void defaultObjects(Template template){
-        super.defaultObjects(template);
-        TemplatesCatalog.setDefaultObjects(template);
-    }
-
-    /**
-     * setObjects
-     * @param templatesBase t
-     */
-    protected static void setObjects(TemplateLoader<?> templatesBase) {
-        templatesBase.objects(ACScheme.class, (template, scheme) -> {
-            template
-                .object("scheme", scheme)
-                .object("scheme.name", scheme.nameDefault());
-        });
     }
 }

@@ -1,11 +1,6 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.database.autocode.ACFormat;
-import tools.gnzlz.database.autocode.ACTable;
-import tools.gnzlz.template.Template;
 import tools.gnzlz.template.TemplateLoader;
-
-import java.util.ArrayList;
 
 public class TemplatesModel extends TemplateLoader<TemplatesModel> {
 
@@ -31,9 +26,7 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
      */
     protected TemplatesModel(String path, String out){
         super(path, out);
-        TemplatesCatalog.setObjects(this);
-        TemplatesScheme.setObjects(this);
-        TemplatesModel.setObjects(this);
+        TemplateObjects.setObjectsModel(this);
     }
 
     /**
@@ -58,34 +51,5 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
      */
     public static TemplatesModel create(String path, String out){
         return new TemplatesModel(path, out);
-    }
-
-    /**
-     * defaultObjects
-     * @param template t
-     */
-    @Override
-    protected void defaultObjects(Template template){
-        super.defaultObjects(template);
-        TemplatesCatalog.setDefaultObjects(template);
-    }
-
-    /**
-     * setObjects
-     * @param templatesBase t
-     */
-    protected static void setObjects(TemplateLoader<?> templatesBase) {
-        templatesBase.objects(ACTable.class, (template, table) -> {
-            ArrayList<String> imports = new ArrayList<>();
-            table.columns.forEach(column -> {
-                String newImport = ACFormat.imports(column.type);
-                if(!imports.contains(newImport)) {
-                    imports.add(newImport);
-                }
-            });
-            template
-                .object("table", table)
-                .object("table.imports", imports);
-        });
     }
 }

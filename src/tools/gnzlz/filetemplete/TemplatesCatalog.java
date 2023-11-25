@@ -33,7 +33,7 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
      */
     protected TemplatesCatalog(String path, String out){
         super(path, out);
-        TemplatesCatalog.setObjects(this);
+        TemplateObjects.setObjectsCatalog(this);
     }
 
     /**
@@ -58,74 +58,5 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
      */
     public static TemplatesCatalog create(String path, String out){
         return new TemplatesCatalog(path, out);
-    }
-
-    /**
-     * defaultObjects
-     * @param template t
-     */
-    @Override
-    protected void defaultObjects(Template template){
-        super.defaultObjects(template);
-        TemplatesCatalog.setDefaultObjects(template);
-    }
-
-    /**
-     * setDefaultObjects
-     * @param template t
-     */
-    protected static void setDefaultObjects(Template template){
-
-        template.object("typeData", o -> {
-            if (o instanceof String s) {
-                return ACFormat.typeData(s);
-            }
-            return "";
-        });
-
-        template.object("typeValue", o -> {
-            if (o instanceof String s) {
-                return ACFormat.typeValue(s);
-            }
-            return "";
-        });
-
-        template.object("isDate", o -> {
-            if (o instanceof String s) {
-                return ACFormat.isDateFormat(s);
-            }
-            return false;
-        });
-    }
-
-    /**
-     * setObjects
-     * @param templatesBase t
-     */
-    protected static void setObjects(TemplateLoader<?> templatesBase) {
-        templatesBase.objects(ACDataBase.class, (template, dataBase) -> {
-            PTConnection connection = dataBase.configuration.connection().properties();
-            template
-                .object("database.name", connection.name())
-                .object("database.user", connection.user())
-                .object("database.password", connection.password())
-                .object("database.host", connection.host())
-                .object("database.port", connection.port())
-                .object("database.path", connection.path())
-                .object("database.dialect", connection.dialect())
-                .object("dialect.mysql", Dialect.MySQL)
-                .object("dialect.sqlite", Dialect.SQLite)
-                .object("dialect.postgresql", Dialect.PostgreSQL);
-        });
-
-        templatesBase.objects(ResultListCommand.class, (template, commands) -> {
-            commands.listCommands((command -> {
-                template.object("command." + command.name().toLowerCase(), command.value());
-            }));
-        });
-
-        templatesBase.objects(ACCatalog.class, (template, catalog) -> {
-            template.object("catalog", catalog);
-        });
     }
 }
