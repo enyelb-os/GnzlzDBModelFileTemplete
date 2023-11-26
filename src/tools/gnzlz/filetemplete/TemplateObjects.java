@@ -67,7 +67,7 @@ public class TemplateObjects {
         templatesBase.addObjects(ACTable.class, (template, table) -> {
             ArrayList<String> imports = new ArrayList<>();
             table.columns.forEach(column -> {
-                String newImport = ACFormat.imports(column.type);
+                String newImport = ACFormat.imports(column.type.type);
                 if(!imports.contains(newImport)) {
                     imports.add(newImport);
                 }
