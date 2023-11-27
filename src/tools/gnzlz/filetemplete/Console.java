@@ -7,6 +7,7 @@ import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
+import tools.gnzlz.filetemplete.properties.Properties;
 import tools.gnzlz.template.TemplateLoader;
 import tools.gnzlz.template.TemplateManager;
 
@@ -104,10 +105,9 @@ public class Console {
 
     /**
      * dbConfiguration
-     * @param <T> t
      * @param command c
      */
-    public static <T extends DBConfiguration> Class<? extends DBConfiguration> dbConfiguration(ResultListCommand command){
+    public static Class<? extends DBConfiguration> dbConfiguration(ResultListCommand command){
         Class<? extends DBConfiguration> c = null;
         if(command.string("type").equalsIgnoreCase("sqlite")){
             SQLite.initConfig(command);
@@ -123,21 +123,39 @@ public class Console {
      * process
      * @param resultListCommand r
      * @param manager m
-     * @param fileNames f
+     * @param properties f
      */
-    public static void process(ResultListCommand resultListCommand, TemplateManager manager, String... fileNames){
-        Console.generate(dbConfiguration(resultListCommand), resultListCommand, manager.templates(), fileNames);
+    public static void process(ResultListCommand resultListCommand, TemplateManager manager, Properties properties){
+        Console.generate(dbConfiguration(resultListCommand), resultListCommand, manager.templates(), properties);
+    }
+
+    /**
+     * process
+     * @param resultListCommand r
+     * @param manager m
+     */
+    public static void process(ResultListCommand resultListCommand, TemplateManager manager){
+        Console.process(resultListCommand, manager, Properties.create());
     }
 
     /**
      * process
      * @param commands c
      * @param manager m
-     * @param fileNames f
+     * @param properties properties
      */
-    public static void process(String[] args, ListCommand commands, TemplateManager manager, String... fileNames){
+    public static void process(String[] args, ListCommand commands, TemplateManager manager, Properties properties){
         ResultListCommand command = Process.argsAndQuestions(args, commands);
-        Console.generate(dbConfiguration(command), command, manager.templates(), fileNames);
+        Console.generate(dbConfiguration(command), command, manager.templates(), properties);
+    }
+
+    /**
+     * process
+     * @param commands c
+     * @param manager m
+     */
+    public static void process(String[] args, ListCommand commands, TemplateManager manager){
+        Console.process(args, commands, manager, Properties.create());
     }
 
     /**
@@ -145,16 +163,26 @@ public class Console {
      * @param <T> t
      * @param command c
      * @param templates t
-     * @param fileNames f
+     * @param properties properties
      */
-    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader<?>> templates, String... fileNames) {
+    public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader<?>> templates, Properties properties) {
 
         ACDataBase dataBase = ACDataBase.dataBase(c, command.string("name"));
 
         boolean createCatalog = true;
         boolean createScheme = true;
         boolean createModel = true;
-        String names = "";
+        final StringBuilder names = new StringBuilder();
+        properties.properties().forEach(property -> {
+            if (property.name().equals("templates")) {
+                if (property.object() instanceof String template) {
+                    if (!names.isEmpty()) {
+                        names.append(",");
+                    }
+                    names.append(template);
+                }
+            }
+        });
 
         Console.processObjects(templates, command, dataBase);
 
@@ -182,10 +210,10 @@ public class Console {
      * @param predicate p
      * @param objects o
      */
-    private static void processTemplate(String names, boolean process, ArrayList<TemplateLoader<?>> templates, Predicate<? super TemplateLoader<?>> predicate, Object ... objects) {
+    private static void processTemplate(StringBuilder names, boolean process, ArrayList<TemplateLoader<?>> templates, Predicate<? super TemplateLoader<?>> predicate, Object ... objects) {
         if (process) {
             templates.stream().filter(predicate).forEach(template -> {
-                template.process(names,objects);
+                template.process(names.toString(), objects);
             });
         }
     }
