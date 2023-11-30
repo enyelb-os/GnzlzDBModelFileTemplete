@@ -8,6 +8,8 @@ import tools.gnzlz.command.result.ResultListCommand;
 import tools.gnzlz.database.autocode.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.filetemplete.properties.Properties;
+import tools.gnzlz.system.ansi.Color;
+import tools.gnzlz.system.io.SystemIO;
 import tools.gnzlz.template.TemplateLoader;
 import tools.gnzlz.template.TemplateManager;
 
@@ -201,6 +203,9 @@ public class Console {
                 });
             });
         });
+
+        SystemIO.OUT.println(Color.RED.print("Press enter to continue"));
+        SystemIO.INP.process();
     }
 
     /**

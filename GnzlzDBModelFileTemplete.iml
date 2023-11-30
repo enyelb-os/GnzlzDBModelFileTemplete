@@ -10,5 +10,6 @@
     <orderEntry type="module" module-name="GnzlzFileTemplete" exported="" />
     <orderEntry type="module" module-name="GnzlzDBModel" exported="" />
     <orderEntry type="module" module-name="GnzlzCommand" exported="" />
+    <orderEntry type="module" module-name="GnzlzSystemIO" exported="" />
   </component>
 </module>
