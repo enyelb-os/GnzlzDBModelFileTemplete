@@ -1,10 +1,13 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.command.functional.FunctionRequiredCommand;
-import tools.gnzlz.command.command.object.ListCommand;
-import tools.gnzlz.command.command.type.*;
+import tools.gnzlz.command.functional.FunctionRequiredCommand;
+import tools.gnzlz.command.object.ListCommand;
+import tools.gnzlz.command.type.*;
 import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.result.ResultListCommand;
+import tools.gnzlz.command.type.CommandInteger;
+import tools.gnzlz.command.type.CommandOptionString;
+import tools.gnzlz.command.type.CommandString;
 import tools.gnzlz.database.autocode.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.filetemplete.properties.Properties;
