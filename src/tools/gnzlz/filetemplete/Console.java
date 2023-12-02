@@ -26,9 +26,7 @@ public class Console {
     /**
      * REQUIRED_DB_FILE
      */
-    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (commands) -> {
-        return commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
-    };
+    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (commands) -> commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
 
     /**
      * TYPE
