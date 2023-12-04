@@ -1,14 +1,13 @@
 package tools.gnzlz.filetemplete;
 
-import tools.gnzlz.command.functional.FunctionRequiredCommand;
-import tools.gnzlz.command.functional.FunctionValidCommand;
-import tools.gnzlz.command.object.ListCommand;
-import tools.gnzlz.command.type.*;
+import tools.gnzlz.command.command.functional.FunctionRequiredCommand;
+import tools.gnzlz.command.command.functional.FunctionValidCommand;
+import tools.gnzlz.command.command.object.ListCommand;
 import tools.gnzlz.command.process.Process;
 import tools.gnzlz.command.result.ResultListCommand;
-import tools.gnzlz.command.type.CommandInteger;
-import tools.gnzlz.command.type.CommandOptionString;
-import tools.gnzlz.command.type.CommandString;
+import tools.gnzlz.command.CommandInteger;
+import tools.gnzlz.command.CommandOptionString;
+import tools.gnzlz.command.CommandString;
 import tools.gnzlz.database.autocode.ACDataBase;
 import tools.gnzlz.database.model.DBConfiguration;
 import tools.gnzlz.filetemplete.properties.Properties;
@@ -25,12 +24,12 @@ public class Console {
     /**
      * REQUIRED_DB_FILE
      */
-    private final static FunctionRequiredCommand REQUIRED_DB_FILE = (allCommands, commands) -> commands.string("type").equalsIgnoreCase("sqlite");
+    private final static FunctionRequiredCommand REQUIRED_DB_FILE = (data) -> data.list.string("type").equalsIgnoreCase("sqlite");
 
     /**
      * REQUIRED_DB_FILE
      */
-    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (allCommands, commands) -> commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
+    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (data) -> data.list.string("type").equalsIgnoreCase("mysql") || data.list.string("type").equalsIgnoreCase("postgresql");
 
     /**
      * TYPE
