@@ -1,6 +1,7 @@
 package tools.gnzlz.filetemplete;
 
 import tools.gnzlz.command.functional.FunctionRequiredCommand;
+import tools.gnzlz.command.functional.FunctionValidCommand;
 import tools.gnzlz.command.object.ListCommand;
 import tools.gnzlz.command.type.*;
 import tools.gnzlz.command.process.Process;
@@ -24,12 +25,12 @@ public class Console {
     /**
      * REQUIRED_DB_FILE
      */
-    private final static FunctionRequiredCommand REQUIRED_DB_FILE = (commands) -> commands.string("type").equalsIgnoreCase("sqlite");
+    private final static FunctionRequiredCommand REQUIRED_DB_FILE = (allCommands, commands) -> commands.string("type").equalsIgnoreCase("sqlite");
 
     /**
      * REQUIRED_DB_FILE
      */
-    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (commands) -> commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
+    private final static FunctionRequiredCommand REQUIRED_DB_SERVER = (allCommands, commands) -> commands.string("type").equalsIgnoreCase("mysql") || commands.string("type").equalsIgnoreCase("postgresql");
 
     /**
      * TYPE
@@ -97,6 +98,7 @@ public class Console {
             .create("path")
             .message("Path file db")
             .required(REQUIRED_DB_FILE)
+            .valid(FunctionValidCommand.FILE)
             .commands("--path", "-pt");
 
     /**
