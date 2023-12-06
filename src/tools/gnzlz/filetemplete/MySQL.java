@@ -28,6 +28,8 @@ public class MySQL extends DBConfiguration {
             .dialect(MySQL).protocol("jdbc:mysql:").host(host).port(port)
             .user(user).password(password).name(name)
             .property("useSSL","false").property("serverTimezone","UTC");
+
+        System.out.println(name+" name database");
     }
 
     @Override
