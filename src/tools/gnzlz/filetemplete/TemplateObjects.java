@@ -11,10 +11,22 @@ import java.util.ArrayList;
 public class TemplateObjects {
 
     /**
-     * setObjectsCatalog
-     * @param templatesBase t
+     * setObjectsCommands
      */
-    protected static void setObjectsCatalog(TemplateLoader<?> templatesBase) {
+    public static tools.gnzlz.template.TemplateObjects setObjectsCommands = (TemplateLoader<?> templatesBase) -> {
+        templatesBase.addObjects(ResultListCommand.class, (template, commands) -> {
+            commands.listCommands((command -> {
+                template.object("command." + command.name().toLowerCase(), command.value());
+            }));
+        });
+    };
+
+    /**
+     * setObjectsCatalog
+     */
+    public static tools.gnzlz.template.TemplateObjects setObjectsCatalog = (TemplateLoader<?> templatesBase) -> {
+        setObjectsCommands.setObjects(templatesBase);
+
         templatesBase.addObjects(ACDataBase.class, (template, dataBase) -> {
             PTConnection connection = dataBase.configuration.connection().properties();
             template
@@ -30,39 +42,29 @@ public class TemplateObjects {
                 .object("dialect.postgresql", Dialect.PostgreSQL);
         });
 
-        templatesBase.addObjects(ResultListCommand.class, (template, commands) -> {
-            commands.listCommands((command -> {
-                template.object("command." + command.name().toLowerCase(), command.value());
-            }));
-        });
-
         templatesBase.addObjects(ACCatalog.class, (template, catalog) -> {
             template.object("catalog", catalog);
         });
-    }
+    };
 
     /**
      * setObjectsScheme
-     * @param templatesBase t
      */
-    protected static void setObjectsScheme(TemplateLoader<?> templatesBase) {
-
-        TemplateObjects.setObjectsCatalog(templatesBase);
+    public static tools.gnzlz.template.TemplateObjects setObjectsScheme = (TemplateLoader<?> templatesBase) -> {
+        setObjectsCatalog.setObjects(templatesBase);
 
         templatesBase.addObjects(ACScheme.class, (template, scheme) -> {
             template
                 .object("scheme", scheme)
                 .object("scheme.name", scheme.nameDefault());
         });
-    }
+    };
 
     /**
      * setObjectsModel
-     * @param templatesBase t
      */
-    protected static void setObjectsModel(TemplateLoader<?> templatesBase) {
-
-        TemplateObjects.setObjectsScheme(templatesBase);
+    public static tools.gnzlz.template.TemplateObjects setObjectsModel = (TemplateLoader<?> templatesBase) -> {
+        setObjectsScheme.setObjects(templatesBase);
 
         templatesBase.addObjects(ACTable.class, (template, table) -> {
             ArrayList<String> imports = new ArrayList<>();
@@ -76,5 +78,5 @@ public class TemplateObjects {
                 .object("table", table)
                 .object("table.imports", imports);
         });
-    }
+    };
 }

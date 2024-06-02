@@ -15,6 +15,7 @@ import tools.gnzlz.system.ansi.Color;
 import tools.gnzlz.system.io.SystemIO;
 import tools.gnzlz.template.TemplateLoader;
 import tools.gnzlz.template.TemplateManager;
+import tools.gnzlz.template.TemplatesNone;
 
 import java.util.ArrayList;
 import java.util.function.Predicate;
@@ -116,7 +117,7 @@ public class Console {
         if(command.string("type").equalsIgnoreCase("sqlite")){
             SQLite.initConfig(command);
             c = SQLite.class;
-        } else {
+        } else if (command.string("type").equalsIgnoreCase("mysql")){
             MySQL.initConfig(command);
             c = MySQL.class;
         }
@@ -170,12 +171,10 @@ public class Console {
      * @param properties properties
      */
     public static <T extends DBConfiguration> void generate(Class<T> c, ResultListCommand command, ArrayList<TemplateLoader<?>> templates, Properties properties) {
-
-        ACDataBase dataBase = ACDataBase.dataBase(c, command.string("name"));
-
         boolean createCatalog = true;
         boolean createScheme = true;
         boolean createModel = true;
+        boolean createNone = true;
         final StringBuilder names = new StringBuilder();
         properties.properties().forEach(property -> {
             if (property.name().equals("templates")) {
@@ -187,52 +186,31 @@ public class Console {
                 }
             }
         });
+        if (c != null) {
+            ACDataBase dataBase = ACDataBase.dataBase(c, command.string("name"));
+            TemplateManager.processObjects(templates, command, dataBase);
 
-        Console.processObjects(templates, command, dataBase);
+            dataBase.catalogs.forEach(catalog -> {
 
-        dataBase.catalogs.forEach(catalog -> {
+                TemplateManager.processObjects(templates, catalog);
+                TemplateManager.processTemplate(names, createCatalog, templates, t -> t instanceof TemplatesCatalog);
 
-            Console.processObjects(templates, catalog);
-            Console.processTemplate(names, createCatalog, templates, t -> t instanceof TemplatesCatalog);
+                catalog.schemes.forEach(scheme -> {
 
-            catalog.schemes.forEach(scheme -> {
+                    TemplateManager.processObjects(templates, scheme);
+                    TemplateManager.processTemplate(names, createScheme, templates, t -> t instanceof TemplatesScheme);
 
-                Console.processObjects(templates, scheme);
-                Console.processTemplate(names, createScheme, templates, t -> t instanceof TemplatesScheme);
-
-                scheme.tables.forEach(table -> {
-                    Console.processTemplate(names, createModel, templates, t -> t instanceof TemplatesModel, table);
+                    scheme.tables.forEach(table -> {
+                        TemplateManager.processTemplate(names, createModel, templates, t -> t instanceof TemplatesModel, table);
+                    });
                 });
             });
-        });
+        } else {
+            TemplateManager.processObjects(templates, command);
+            TemplateManager.processTemplate(names, createNone, templates, t -> t instanceof TemplatesNone);
+        }
 
         SystemIO.OUT.println(Color.RED.print("Press enter to continue"));
         SystemIO.INP.process();
-    }
-
-    /**
-     * processTemplate
-     * @param names n
-     * @param templates t
-     * @param predicate p
-     * @param objects o
-     */
-    private static void processTemplate(StringBuilder names, boolean process, ArrayList<TemplateLoader<?>> templates, Predicate<? super TemplateLoader<?>> predicate, Object ... objects) {
-        if (process) {
-            templates.stream().filter(predicate).forEach(template -> {
-                template.process(names.toString(), objects);
-            });
-        }
-    }
-
-    /**
-     * processObjects
-     * @param templates t
-     * @param objects o
-     */
-    private static void processObjects(ArrayList<TemplateLoader<?>> templates, Object ... objects) {
-        templates.forEach(template -> {
-            template.addObjects(objects);
-        });
     }
 }

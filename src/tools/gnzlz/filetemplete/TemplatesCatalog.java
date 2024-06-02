@@ -32,8 +32,7 @@ public class TemplatesCatalog extends TemplateLoader<TemplatesCatalog> {
      * @param out o
      */
     protected TemplatesCatalog(String path, String out){
-        super(path, out);
-        TemplateObjects.setObjectsCatalog(this);
+        super(path, out, TemplateObjects.setObjectsCatalog);
     }
 
     /**

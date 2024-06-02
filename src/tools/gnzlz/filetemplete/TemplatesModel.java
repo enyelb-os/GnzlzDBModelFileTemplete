@@ -25,8 +25,7 @@ public class TemplatesModel extends TemplateLoader<TemplatesModel> {
      * @param out o
      */
     protected TemplatesModel(String path, String out){
-        super(path, out);
-        TemplateObjects.setObjectsModel(this);
+        super(path, out, TemplateObjects.setObjectsModel);
     }
 
     /**

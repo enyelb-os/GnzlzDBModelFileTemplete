@@ -27,8 +27,7 @@ public class TemplatesScheme extends TemplateLoader<TemplatesScheme> {
      * @param out o
      */
     protected TemplatesScheme(String path, String out){
-        super(path, out);
-        TemplateObjects.setObjectsScheme(this);
+        super(path, out, TemplateObjects.setObjectsScheme);
     }
 
     /**
